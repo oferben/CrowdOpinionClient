@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<!--
+
+    ______                       ______        _       _           
+   / ____/________ _      ______/ / __ \____  (_)___  (_)___  ____ 
+  / /   / ___/ __ \ | /| / / __  / / / / __ \/ / __ \/ / __ \/ __ \
+ / /___/ /  / /_/ / |/ |/ / /_/ / /_/ / /_/ / / / / / / /_/ / / / /
+ \____/_/   \____/|__/|__/\__,_/\____/ .___/_/_/ /_/_/\____/_/ /_/ 
+                                    /_/                            
+    
+    * Mobile Applications Architecture Class 2013
+    * By: Ofer Ben Noon, Aviram Ben Moshe
+
+-->
+<html>
+    <head>
+        <!-- Title and charset -->
+        <title>CrowdOpinion</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS Assets -->
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+        <link rel="stylesheet" href="css/jquery.mobile.crowdopinion.custom.css"/>
+        <link rel="stylesheet" href="//code.jquery.com/mobile/1.3.1/jquery.mobile.structure-1.3.1.min.css"/>
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="css/add2home.css" type="text/css"/>
+
+        <!-- Load scripts in parallel but execute in order (using head.js) -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/headjs/0.99/head.min.js"></script>
+        <script>head.js(
+                    "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js",
+                    "js/general_config.js",
+                    "//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.3.1/jquery.mobile.min.js",
+                    "//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.0/jquery.validate.min.js",
+                    "js/identification.js",
+                    "js/questions.js",
+                    "js/add2home.js",
+                    function() {
+                        /* Show the app content once all libraries were successfully loaded */
+                        $("#cover").hide();
+                    }
+            );</script>
+
+        <!-- Viewport, Splash screen, App icon -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" href="img/icon_52.png">
+        <link rel="apple-touch-icon" href="img/icon_52.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/icon_72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/icon_114.png">
+        <link rel="apple-touch-startup-image" href="img/640x1096.png" media="(device-height: 568px)">
+        <link rel="apple-touch-startup-image" href="img/640x920.png" sizes="640x960" media="(device-height: 480px)">
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
+    </head>
+    <body> 
+
+        <!-- Hack that prevents the content from being shown until all JS libraries were loaded -->
+        <div id="cover"></div>
+
+        <!-- Dummy page that will determine whether the user logged in or not (on load) -->
+        <div id="loading" data-role="page">Loading...</div>
+        
+        <!-- Login -->
+        <div data-role="page" id="login" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Login</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+                
+                <div id="login-message" class="boxok"></div>
+                <div id="login-error" class="boxerror"></div>
+
+                <form id="login-form" class="validate">
+                    <div data-role="fieldcontain">
+                        <label for="login-email">Email Address:</label>
+                        <input type="email" name="login-email" id="login-email" placeholder="John.Smith@gmail.com" value="" class="required email"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="login-password">Password:</label>
+                        <input type="password" name="login-password" id="login-password" value="" placeholder="Password" autocomplete="off" class="required"/>
+                    </div>
+                    <button type="submit" data-theme="b" name="submit" value="submit">Login</button>
+                </form>
+
+                <p>Not a member yet? <a href="#signup">Sign up now.</a></p>
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+
+        </div><!-- /login -->
+
+        <!-- Signup -->
+        <div data-role="page" id="signup" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Sign up</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                
+                <div id="signup-error" class="boxerror"></div>
+
+                <form id="signup-form" class="validate">
+                    <div data-role="fieldcontain">
+                        <label for="signup-fullname">Full Name:</label>
+                        <input type="text" name="signup-fullname" id="signup-fullname" placeholder="John Smith" value="" class="required"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="signup-email">Email Address:</label>
+                        <input type="email" name="signup-email" id="signup-email" placeholder="John.Smith@gmail.com" value="" class="required email"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="signup-password">Password:</label>
+                        <input type="password" name="signup-password" id="signup-password" value="" placeholder="Password" autocomplete="off" class="required"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="signup-password2">Retype Password</label>
+                        <input type="password" name="signup-password2" id="signup-password2" value="" placeholder="Password" autocomplete="off" class="required"/>
+                    </div>
+                    <button type="submit" data-theme="b" name="submit" value="submit">Sign up</button>
+                </form>
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+
+        </div><!-- /signup -->
+
+        <!-- Homepage -->
+        <div data-role="page" id="home" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Home</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+
+                <div class="boxinfo">Hello <span id="home_name" class="strong"></span>, you have <span id="available_coins" class="strong"></span> coins left.</div>
+                
+                <div class="boxok" id="home-message"></div>
+                
+                <div class="boxerror" id="home-error"></div>
+
+                <ul data-role="listview" data-inset="true" class="ui-icon-alt">
+                    <li><a href="#ask" data-icon="edit">Ask a Question</a></li>
+                    <li><a href="javascript:getRandomQuestion(true)">Answer Questions</a></li>
+                    <li><a href="javascript:moveFromHomeToPrevAsked()">View Answers</a></li>
+                    <li><a href="javascript:logout();">Logout</a></li>
+                </ul>
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+
+        </div><!-- /home -->
+
+        <!-- Ask questions -->
+        <div data-role="page" id="ask" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Ask a Question</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+
+                <form id="ask-form">
+                    <div data-role="fieldcontain">
+                        <select name="ask-question" id="ask-question" data-theme="b" onchange="updateAskCompletionVisibility(this.value)">
+                            <option value="0">Choose a question...</option>
+                            <option value="1">Where am I more ____?</option>
+                            <option value="2">Which one out of the two is more ____?</option>
+                            <option value="3">Where do I look more ____?</option>
+                            <option value="4">What would you prefer?</option>
+                        </select>
+                    </div>
+
+                    <div id="question-preview" class="hidden">Question preview...</div>
+
+                    <div data-role="fieldcontain" id="ask-completion-container" class="hidden">
+                        <label for="ask-completion">Complete the question:</label>
+                        <input type="text" name="ask-completion" class="ignore" id="ask-completion" 
+                               placeholder="Complete the question..." value="" class="required" 
+                               onkeydown="updateQuestionPreview()" onkeyup="updateQuestionPreview()" 
+                               onkeypress="updateQuestionPreview()" 
+                               onfocus="updateQuestionPreview()" onblur="updateQuestionPreview()"/>
+                    </div>
+
+                    <div data-role="fieldcontain">
+                        <label for="ask-coins">Desired answers:</label>
+                        <input type="range" name="ask-coins" class="ignore" id="ask-coins" data-highlight="true" min="0" max="100" value="10">
+                        <span class="helperText">* 1 Answer = 1 Coin</span>
+                    </div>
+
+                    <div id="imagesBlock">
+                        <input data-role="none" type="file" id="fileInput1" onchange="showImage(this.files, 'uploadPreview1')" class="hidden-file-input"/>
+                        <a href="javascript:fileLoad('fileInput1');">
+                            <img id="uploadPreview1" class="imageContainer left" alt="pic1" src="img/chooseImage1.png" />
+                        </a>
+                        
+                        <input data-role="none" type="file" id="fileInput2" onchange="showImage(this.files, 'uploadPreview2')" class="hidden-file-input"/>
+                        <a href="javascript:fileLoad('fileInput2');">
+                            <img id="uploadPreview2" class="imageContainer right" alt="pic1" src="img/chooseImage2.png" />
+                        </a>
+                    </div>
+                    
+                    <input type="hidden" name="ask-uploadPreview1" id="ask-uploadPreview1" value=""/> 
+                    <input type="hidden" name="ask-uploadPreview2" id="ask-uploadPreview2" value=""/>
+
+                    <button type="submit" data-theme="b" name="submit" value="submit">Submit question</button>
+                </form>
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+
+        </div><!-- /Ask questions -->
+
+        <!-- Previously asked questions -->
+        <div data-role="page" id="prev-asked" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Question <span id="current-question-num">999</span> / <span id="total-questions-num">999</span></h1>
+            </div><!-- /header -->
+
+            <!-- NOTE: The content class is used by the js code to apply height style to the div -->
+            <div class="content" data-role="content">	
+
+                <h3 id="curr-prev-asked-question">Current Question</h3>
+                <div id="votesArea">
+
+                    <!-- TODO - Ofer - replace the icons and abandon the jquery mobile icons -->
+                    <a id="left-swipe-icon" href="javascript:moveToPrevPrevAskedQuestion()" class="swipeIcons leftSwipe"></a>
+                    <a id="right-swipe-icon" href="javascript:moveToNextPrevAskedQuestion()" class="swipeIcons rightSwipe"></a>
+
+                    
+
+                    <div class="votesDisplay left">
+                        <div class="answers">
+                            <div class="votesPercentages"><span id="votes-percentages-1">999</span>%</div>
+                            <div class="votesNumber">(<span id="votes-number-1">999</span> votes)</div>
+                        </div>
+                        <div class="imgContainer">
+                            <img id="prev-answer-img-1" class="" alt="pic1" src="img/loading.gif" />
+                        </div>
+                    </div>
+                    <div class="votesDisplay right">
+                        <div class="answers">
+                            <div class="votesPercentages"><span id="votes-percentages-2">999</span>%</div>
+                            <div class="votesNumber">(<span id="votes-number-2">999</span> votes)</div>
+                        </div>
+                        <div class="imgContainer">
+                            <img id="prev-answer-img-2" class="" alt="pic2" src="img/loading.gif" />
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div id="answered-expected">
+                    <span id="received-votes">999</span> votes received out of <span id="expected-votes">999</span> requested
+                </div>
+
+
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+        </div><!-- /prev-asked -->
+
+        <!-- Answer questions -->
+        <div data-role="page" id="answer" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Answer others</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+
+                <h2 id="answer-question">Which one out of the two is more urban?</h2>
+
+                <div id="answersImages">
+                    <a id="vote-link-1" href="#" onclick="vote(1)" data-qid="1234">
+                        <img class="imageContainer left" alt="" id="answer-option-1" src="img/temp_1.jpg" />
+                    </a>
+                    <a id="vote-link-2" href="#" onclick="vote(2)" data-qid="1234">
+                        <img class="imageContainer right" alt="" id="answer-option-2" src="img/temp_2.jpg" />
+                    </a>
+                </div>
+
+                <button type="submit" data-theme="d" name="submit" value="submit" data-icon="forward" onclick="javascript:getRandomQuestion(false)">Skip question</button>
+
+            </div><!-- /content -->
+
+            <div class="footer"></div>
+
+        </div><!-- /answer -->
+
+        <!-- Terms of Use -->
+        <div data-role="page" id="terms" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Terms of Use</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+                <h2>
+                    1. Terms
+                </h2>
+
+                <p>
+                    By accessing this web site, you are agreeing to be bound by these 
+                    web site Terms and Conditions of Use, all applicable laws and regulations, 
+                    and agree that you are responsible for compliance with any applicable local 
+                    laws. If you do not agree with any of these terms, you are prohibited from 
+                    using or accessing this site. The materials contained in this web site are 
+                    protected by applicable copyright and trade mark law.
+                </p>
+
+                <h2>
+                    2. Use License
+                </h2>
+
+                <ol type="a">
+                    <li>
+                        Permission is granted to temporarily download one copy of the materials 
+                        (information or software) on CrowdOpinion's web site for personal, 
+                        non-commercial transitory viewing only. This is the grant of a license, 
+                        not a transfer of title, and under this license you may not:
+
+                        <ol type="i">
+                            <li>modify or copy the materials;</li>
+                            <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
+                            <li>attempt to decompile or reverse engineer any software contained on CrowdOpinion's web site;</li>
+                            <li>remove any copyright or other proprietary notations from the materials; or</li>
+                            <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+                        </ol>
+                    </li>
+                    <li>
+                        This license shall automatically terminate if you violate any of these restrictions and may be terminated by CrowdOpinion at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+                    </li>
+                </ol>
+
+                <h2>
+                    3. Disclaimer
+                </h2>
+
+                <ol type="a">
+                    <li>
+                        The materials on CrowdOpinion's web site are provided "as is". CrowdOpinion makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, CrowdOpinion does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
+                    </li>
+                </ol>
+
+                <h2>
+                    4. Limitations
+                </h2>
+
+                <p>
+                    In no event shall CrowdOpinion or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on CrowdOpinion's Internet site, even if CrowdOpinion or a CrowdOpinion authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+                </p>
+
+                <h2>
+                    5. Revisions and Errata
+                </h2>
+
+                <p>
+                    The materials appearing on CrowdOpinion's web site could include technical, typographical, or photographic errors. CrowdOpinion does not warrant that any of the materials on its web site are accurate, complete, or current. CrowdOpinion may make changes to the materials contained on its web site at any time without notice. CrowdOpinion does not, however, make any commitment to update the materials.
+                </p>
+
+                <h2>
+                    6. Links
+                </h2>
+
+                <p>
+                    CrowdOpinion has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by CrowdOpinion of the site. Use of any such linked web site is at the user's own risk.
+                </p>
+
+                <h2>
+                    7. Site Terms of Use Modifications
+                </h2>
+
+                <p>
+                    CrowdOpinion may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
+                </p>
+
+                <h2>
+                    8. Governing Law
+                </h2>
+
+                <p>
+                    Any claim relating to CrowdOpinion's web site shall be governed by the laws of the State of Israel without regard to its conflict of law provisions.
+                </p>
+
+                <p>
+                    General Terms and Conditions applicable to Use of a Web Site.
+                </p>
+
+
+
+                <h2>
+                    Privacy Policy
+                </h2>
+
+                <p>
+                    Your privacy is very important to us. Accordingly, we have developed this Policy in order for you to understand how we collect, use, communicate and disclose and make use of personal information. The following outlines our privacy policy.
+                </p>
+
+                <ul>
+                    <li>
+                        Before or at the time of collecting personal information, we will identify the purposes for which information is being collected.
+                    </li>
+                    <li>
+                        We will collect and use of personal information solely with the objective of fulfilling those purposes specified by us and for other compatible purposes, unless we obtain the consent of the individual concerned or as required by law.		
+                    </li>
+                    <li>
+                        We will only retain personal information as long as necessary for the fulfillment of those purposes. 
+                    </li>
+                    <li>
+                        We will collect personal information by lawful and fair means and, where appropriate, with the knowledge or consent of the individual concerned. 
+                    </li>
+                    <li>
+                        Personal data should be relevant to the purposes for which it is to be used, and, to the extent necessary for those purposes, should be accurate, complete, and up-to-date. 
+                    </li>
+                    <li>
+                        We will protect personal information by reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.
+                    </li>
+                    <li>
+                        We will make readily available to customers information about our policies and practices relating to the management of personal information. 
+                    </li>
+                </ul>
+
+                <p>
+                    We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained. 
+                </p>
+            </div>
+
+
+            <div class="footer"></div>
+
+        </div><!-- /terms -->
+
+        <!-- About -->
+        <div data-role="page" id="about" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>About</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+                <h2>
+                    About CrowdOpinion
+                </h2>
+
+                <h3>Intro</h3>
+
+                <p>
+                    CrowdOpinion is a revolutionary application that lets you discover interesting insights from other people by asking simple questions in the form of comparing two photos.<br/>                    
+                </p>
+
+                <h3>Privacy</h3>
+
+                <p>
+                    Your privacy is our top priority. Our simple terms of use and privacy policy is available <a href="#terms">here</a>.<br/>                    
+                    If you have any questions about these Terms of Use, please <a href="mailto:aviram@careersonar.com">contact us</a>.
+                </p>
+
+                <h3>Team</h3>
+
+                <p>
+                    CrowdOpinion was founded in May 2013 by Ofer Ben Noon and Aviram Ben Moshe.
+                </p>
+
+
+            </div>
+
+
+            <div class="footer"></div>
+
+        </div><!-- /about -->
+
+        <!-- Help -->
+        <div data-role="page" id="help" data-theme="a">
+
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Help</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+                <h2>
+                    Help
+                </h2>
+                
+                <h4>Do I have to sign up to use CrowdOpinion?</h4>
+
+                <p>Yes, users must sign up and login in order to post questions and answer others.</p>
+                
+                
+                <h4>What is a CrowdOpinion coin?</h4>
+
+                <p>Coins are the currency of CrowdOpinion. Coins allows you to ask questions and receive votes. Each vote equals one coin.</p>
+                
+                
+                <h4>How many coins do I get for every question I answer?</h4>
+
+                <p>You will receive 0.8 coins per answered question.</p>
+                
+                
+                <h4>Is my privacy protected?</h4>
+
+                <p>Your privacy is our top priority. Our simple terms of use and privacy policy is available <a href="#terms">here</a>.</p>
+                
+                
+                <h4>Is there a limit to the number of questions I can answer?</h4>
+
+                <p>No, feel free to help others and answer as many questions as you want.</p>
+                
+                <h4>I have a question, but I didn't found an answer here.</h4>
+
+                <p>If you can't find your answer here, feel free to <a href="mailto:aviram@careersonar.com">contact us</a> by email.</p>
+            </div>
+
+
+            <div class="footer"></div>
+
+        </div><!-- /help -->
+
+    </body>
+</html>
